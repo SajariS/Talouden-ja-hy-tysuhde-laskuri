@@ -2,7 +2,10 @@
 import { DialogContent, TextField } from "@mui/material";
 
 
-export default function JuomaDia({juoma, handleChange}) {
+export default function JuomaDia({juoma, handleChange, virheet}) {
+
+
+
     return(
         <DialogContent>
             <TextField
@@ -13,7 +16,12 @@ export default function JuomaDia({juoma, handleChange}) {
             variant="standard"
             value={juoma.voltti}
             onChange={handleChange}
-            type="number"
+            error={virheet.voltti}
+            helperText={virheet.voltti ? 'Virheellinen syöte' : ''}
+            inputProps={{
+                pattern: '^\\d*\\.?\\d*$',
+                inputMode: 'numeric'
+            }}
             />
             <TextField
             margin="dense"
@@ -23,7 +31,12 @@ export default function JuomaDia({juoma, handleChange}) {
             variant="standard"
             value={juoma.tilavuus}
             onChange={handleChange}
-            type="number"
+            error={virheet.tilavuus}
+            helperText={virheet.voltti ? 'Virheellinen syöte' : ''}
+            inputProps={{
+                pattern: '^\\d*\\.?\\d*$',
+                inputMode: 'numeric'
+            }}
             />
             <TextField
             margin="dense"
@@ -33,7 +46,12 @@ export default function JuomaDia({juoma, handleChange}) {
             variant="standard"
             value={juoma.hinta}
             onChange={handleChange}
-            type="number"
+            error={virheet.hinta}
+            helperText={virheet.voltti ? 'Virheellinen syöte' : ''}
+            inputProps={{
+                pattern: '^\\d*\\.?\\d*$',
+                inputMode: 'numeric'
+            }}
             />
             <TextField
             margin="dense"
@@ -43,7 +61,12 @@ export default function JuomaDia({juoma, handleChange}) {
             variant="standard"
             value={juoma.pantti}
             onChange={handleChange}
-            type="number"
+            error={virheet.pantti}
+            helperText={virheet.voltti ? 'Virheellinen syöte' : ''}
+            inputProps={{
+                pattern: '^\\d*\\.?\\d*$',
+                inputMode: 'numeric'
+            }}
             />
         </DialogContent>
     )

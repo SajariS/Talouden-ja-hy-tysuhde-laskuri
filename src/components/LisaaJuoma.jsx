@@ -13,7 +13,13 @@ export default function LisaaJuoma({setKori, kori}) {
         pantti: 0.0
     };
 
-    const [juoma, setJuoma] = useState(juomaAlkuTila)
+    const [juoma, setJuoma] = useState(juomaAlkuTila);
+    const [virheet, setVirheet] = useState({
+        voltti: false,
+        tilavuus: false,
+        hinta: false,
+        pantti: false
+    })
 
     const [open, setOpen] = useState(false);
 
@@ -36,7 +42,18 @@ export default function LisaaJuoma({setKori, kori}) {
     }
 
     const handleChange = (e) => {
-        setJuoma({...juoma, [e.target.name]: e.target.value});
+        const { name, value } = e.target;
+
+        const isValid = /^\d*\.?\d*$/.test(value);
+
+        setJuoma({...juoma, [name]: value});
+        setVirheet({...virheet, [name]: !isValid});
+
+        console.log(validateInput())
+    }
+
+    const validateInput = () => {
+        return !Object.values(virheet).every((arvo) => arvo === false);
     }
 
     return(
@@ -46,10 +63,10 @@ export default function LisaaJuoma({setKori, kori}) {
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Lisää juoma</DialogTitle>
-                <JuomaDia juoma={juoma} handleChange={handleChange} />
+                <JuomaDia juoma={juoma} handleChange={handleChange} virheet={virheet} />
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleAdd}>Lisää koriin</Button>
+                    <Button onClick={handleAdd} disabled={validateInput()}>Lisää koriin</Button>
                 </DialogActions>
             </Dialog>
         </>
