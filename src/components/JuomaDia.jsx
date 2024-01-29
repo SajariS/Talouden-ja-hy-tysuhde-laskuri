@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { DialogContent, TextField } from "@mui/material";
+import { DialogContent, InputAdornment, TextField } from "@mui/material";
 
 
 export default function JuomaDia({juoma, handleChange, virheet}) {
@@ -18,9 +18,8 @@ export default function JuomaDia({juoma, handleChange, virheet}) {
             onChange={handleChange}
             error={virheet.voltti}
             helperText={virheet.voltti ? 'Virheellinen syöte' : ''}
-            inputProps={{
-                pattern: '^\\d*\\.?\\d*$',
-                inputMode: 'numeric'
+            InputProps={{
+                startAdornment: <InputAdornment position="start">%</InputAdornment>,
             }}
             />
             <TextField
@@ -33,9 +32,8 @@ export default function JuomaDia({juoma, handleChange, virheet}) {
             onChange={handleChange}
             error={virheet.tilavuus}
             helperText={virheet.voltti ? 'Virheellinen syöte' : ''}
-            inputProps={{
-                pattern: '^\\d*\\.?\\d*$',
-                inputMode: 'numeric'
+            InputProps={{
+                startAdornment: <InputAdornment position="start">l</InputAdornment>,
             }}
             />
             <TextField
@@ -48,9 +46,8 @@ export default function JuomaDia({juoma, handleChange, virheet}) {
             onChange={handleChange}
             error={virheet.hinta}
             helperText={virheet.voltti ? 'Virheellinen syöte' : ''}
-            inputProps={{
-                pattern: '^\\d*\\.?\\d*$',
-                inputMode: 'numeric'
+            InputProps={{
+                startAdornment: <InputAdornment position="start">€</InputAdornment>,
             }}
             />
             <TextField
@@ -63,10 +60,22 @@ export default function JuomaDia({juoma, handleChange, virheet}) {
             onChange={handleChange}
             error={virheet.pantti}
             helperText={virheet.voltti ? 'Virheellinen syöte' : ''}
-            inputProps={{
-                pattern: '^\\d*\\.?\\d*$',
-                inputMode: 'numeric'
+            InputProps={{
+                startAdornment: <InputAdornment position="start">€</InputAdornment>,
             }}
+            />
+            <TextField
+            margin="dense"
+            label="Lukumäärä"
+            name="lukumaara"
+            fullWidth
+            variant="standard"
+            value={juoma.lukumaara}
+            onChange={handleChange}
+            error={virheet.lukumaara}
+            helperText={virheet.voltti ? 'Virheellinen syöte' : ''}
+            type="number"
+            inputProps={{min: 0}}
             />
         </DialogContent>
     )

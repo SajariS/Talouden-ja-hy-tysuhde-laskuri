@@ -2,21 +2,18 @@
 import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { useState } from "react";
 import JuomaDia from "./JuomaDia";
-import { v4 as uuidv4 } from "uuid";
 
-export default function LisaaJuoma({setKori, kori}) {
 
-    //Helppoa palautusta varten, auttaa myöhemmin B)
-    const juomaAlkuTila = {
+export default function MuokkaaJuoma({data, setKori}) {
+
+    const [juoma, setJuoma] = useState({
         id: '',
         voltti: '',
         tilavuus: '',
         hinta: '',
         pantti: '',
         lukumaara: ''
-    };
-
-    const [juoma, setJuoma] = useState(juomaAlkuTila);
+    });
     const [virheet, setVirheet] = useState({
         voltti: false,
         tilavuus: false,
@@ -27,24 +24,20 @@ export default function LisaaJuoma({setKori, kori}) {
 
     const [open, setOpen] = useState(false);
 
-    const handleClose = () => {
-        setOpen(false);
-        handleReset();
-    }
-
     const handleOpen = () => {
         setOpen(true);
-        setJuoma({...juoma, id: uuidv4()});
-    }
+        setJuoma({
+            id: data.id,
+            voltti: data.voltti,
+            tilavuus: data.tilavuus,
+            hinta: data.hinta,
+            pantti: data.pantti,
+            lukumaara: data.lukumaara
+        });
+    };
 
-    const handleAdd = () => {
-        setKori([...kori, juoma]);
-        handleClose();
-        handleReset();
-    }
-
-    const handleReset = () => {
-        setJuoma(juomaAlkuTila);
+    const handleClose = () => {
+        setOpen(false);
     }
 
     const handleChange = (e) => {
@@ -54,28 +47,40 @@ export default function LisaaJuoma({setKori, kori}) {
 
         setJuoma({...juoma, [name]: value});
         setVirheet({...virheet, [name]: !isValid});
-    }
+    };
 
     const validateInput = () => {
-        if(Object.values(virheet).every((arvo) => arvo === false) && Object.values(juoma).every((arvo) => arvo !== '')) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
+        return !Object.values(virheet).every((arvo) => arvo === false);
+    };
 
+    const handleEdit = () => {
+        setKori((kori) => kori.map((vanhaJuoma) => {
+            if(vanhaJuoma.id === data.id) {
+                return {...vanhaJuoma,
+                voltti: juoma.voltti,
+                tilavuus: juoma.tilavuus,
+                hinta: juoma.hinta,
+                pantti: juoma.pantti,
+                lukumaara: juoma.lukumaara
+                }
+            }
+            return vanhaJuoma;
+        }))
+
+        handleClose();
+    }
+    
     return(
         <>
             <Button size="small" onClick={handleOpen}>
-                Lisää
+                Muokkaa
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Lisää juoma</DialogTitle>
+                <DialogTitle>Muokkaa</DialogTitle>
                 <JuomaDia juoma={juoma} handleChange={handleChange} virheet={virheet} />
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleAdd} disabled={validateInput()}>Lisää koriin</Button>
+                    <Button onClick={handleEdit} disabled={validateInput()}>Tallenna</Button>
                 </DialogActions>
             </Dialog>
         </>
