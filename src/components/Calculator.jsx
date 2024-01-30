@@ -5,8 +5,9 @@ import { AgGridReact } from "ag-grid-react";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { Grid, Button } from "@mui/material";
+import { Grid, Button, Container } from "@mui/material";
 import MuokkaaJuoma from "./MuokkaaJuoma";
+import KoriVertaus from "./KoriVertaus";
 
 export default function Calculator() {
 
@@ -16,13 +17,13 @@ export default function Calculator() {
     //Viereen +(kopioi) ja -(poisto) ja nappi joka nollaa
     //editointi -- Tehty
     const [columnDefs] = useState([
-        {field: 'voltti', width: 140},
-        {field: 'tilavuus', width: 120},
-        {field: 'hinta', width: 120},
-        {field: 'lukumaara', width: 120, headerName: 'Lukumäärä'},
+        {field: 'voltti', width: 110},
+        {field: 'tilavuus', width: 110},
+        {field: 'hinta', width: 110},
+        {field: 'lukumaara', width: 110, headerName: 'lkm.'},
         {
-            cellRenderer: params => <Button size="small" onClick={() => handleDelete(params.data.id)}>Poistha</Button>,
-            width: 100
+            cellRenderer: params => <Button size="small" color="error" onClick={() => handleDelete(params.data.id)}>Poista</Button>,
+            width: 90
         },
         {
             cellRenderer: params => <MuokkaaJuoma data={params.data} setKori={setKori} />,
@@ -30,13 +31,13 @@ export default function Calculator() {
         }
     ]);
     const [columnDefs2] = useState([
-        {field: 'voltti', width: 120},
-        {field: 'tilavuus', width: 120},
-        {field: 'hinta', width: 120},
-        {field: 'lukumaara', width: 120, headerName: 'Lukumäärä'},
+        {field: 'voltti', width: 110},
+        {field: 'tilavuus', width: 110},
+        {field: 'hinta', width: 110},
+        {field: 'lukumaara', width: 110, headerName: 'Lkm.'},
         {
-            cellRenderer: params => <Button size="small" onClick={() => handleDelete(params.data.id)}>Poistha</Button>,
-            width: 100
+            cellRenderer: params => <Button size="small" color="error" onClick={() => handleDelete(params.data.id)}>Poista</Button>,
+            width: 90
         },
         {
             cellRenderer: params => <MuokkaaJuoma data={params.data} kori={kori2} setKori={setKori2} />,
@@ -59,37 +60,35 @@ export default function Calculator() {
         console.log(kori2);
     }
 
-    const laskuriRikulle = (juotava) => {
-        //koko korille
-        const viinanMaara = parseFloat(juotava.tilavuus) * (parseFloat(juotava.voltti) / 100) * parseInt(juotava.lukumaara);
-        //ja myös koko korille
-        const euroMaara = parseInt(juotava.lukumaara) * (parseFloat(juotava.hinta) - parseFloat(juotava.pantti));
-        // ja niillä tämä
-        return euroMaara / viinanMaara;
-    }
-
     return(
         <>
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
-                    <div className="ag-theme-material" style={{ width: '80%', height: 600}}>
-                            <LisaaJuoma setKori={setKori} kori={kori} />
-                            <AgGridReact
-                            rowData={kori}
-                            columnDefs={columnDefs}
-                            />
-                    </div>
-                </Grid>
-                <Grid item xs={6}>
-                    <div className="ag-theme-material" style={{ width: '80%', height: 600}}>
-                            <LisaaJuoma setKori={setKori2} kori={kori2} />
-                            <AgGridReact
-                            rowData={kori2}
-                            columnDefs={columnDefs2}
-                            />
-                    </div>
-                </Grid>
-            </Grid>
+            <Container maxWidth="xxl">
+                    <Grid container spacing={0} justifyContent="center">
+                        <Grid item xs={5}>
+                            <div className="ag-theme-material" style={{ width: '90%', height: 600}}>
+                                    <LisaaJuoma setKori={setKori} kori={kori} />
+                                    <AgGridReact
+                                    rowData={kori}
+                                    columnDefs={columnDefs}
+                                    overlayNoRowsTemplate="Lisää juomia napista"
+                                    />
+                            </div>
+                        </Grid>
+                        <Grid item xs={2}>
+                        <KoriVertaus kori={kori} kori2={kori2} setKori={setKori} setKori2={setKori2} />
+                        </Grid>
+                        <Grid item xs={5}>
+                            <div className="ag-theme-material" style={{ width: '90%', height: 600}}>
+                                    <LisaaJuoma setKori={setKori2} kori={kori2} />
+                                    <AgGridReact
+                                    rowData={kori2}
+                                    columnDefs={columnDefs2}
+                                    overlayNoRowsTemplate="Lisää juomia napista"
+                                    />
+                            </div>
+                        </Grid>
+                    </Grid>
+                </Container>
         </>
     )
 }
