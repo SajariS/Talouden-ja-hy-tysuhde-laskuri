@@ -49,13 +49,13 @@ export default function KoriVertaus({kori, kori2, setKori, setKori2}) {
                 viinat.push(juoma.tilavuus * (juoma.voltti / 100) * juoma.pakkausJuoma * juoma.lukumaara);
                 hinnat.push(juoma.lukumaara * juoma.hinta - (juoma.pantti * juoma.pakkausJuoma * juoma.lukumaara));
                 hintaIlmanPanttia.push(juoma.lukumaara * juoma.hinta);
-                tilavuus.push(juoma.tilavuus);
+                tilavuus.push(juoma.tilavuus * juoma.pakkausJuoma * juoma.lukumaara);
             }
             else {
                 viinat.push(juoma.tilavuus * (juoma.voltti / 100) * juoma.lukumaara);
                 hinnat.push(juoma.lukumaara * juoma.hinta - juoma.pantti * juoma.lukumaara);
                 hintaIlmanPanttia.push(juoma.lukumaara * juoma.hinta);
-                tilavuus.push(juoma.tilavuus);
+                tilavuus.push(juoma.tilavuus * juoma.lukumaara);
             }
         });
 
@@ -65,13 +65,13 @@ export default function KoriVertaus({kori, kori2, setKori, setKori2}) {
                 viinat2.push(juoma.tilavuus * (juoma.voltti / 100) * juoma.pakkausJuoma * juoma.lukumaara);
                 hinnat2.push(juoma.lukumaara * juoma.hinta - (juoma.pantti * juoma.pakkausJuoma * juoma.lukumaara));
                 hintaIlmanPanttia2.push(juoma.lukumaara * juoma.hinta);
-                tilavuus2.push(juoma.tilavuus);
+                tilavuus2.push(juoma.tilavuus * juoma.pakkausJuoma * juoma.lukumaara);
             }
             else {
                 viinat2.push(juoma.tilavuus * (juoma.voltti / 100) * juoma.lukumaara);
                 hinnat2.push(juoma.lukumaara * juoma.hinta - juoma.pantti * juoma.lukumaara);
                 hintaIlmanPanttia2.push(juoma.lukumaara * juoma.hinta);
-                tilavuus2.push(juoma.tilavuus);
+                tilavuus2.push(juoma.tilavuus * juoma.lukumaara);
             }
         });
 
