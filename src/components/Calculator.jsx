@@ -5,7 +5,7 @@ import { AgGridReact } from "ag-grid-react";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { Grid, Button, Container } from "@mui/material";
+import { Grid, Button, Container, Typography } from "@mui/material";
 import MuokkaaJuoma from "./MuokkaaJuoma";
 import KoriVertaus from "./KoriVertaus";
 
@@ -66,7 +66,14 @@ export default function Calculator() {
                     <Grid container spacing={0} justifyContent="center">
                         <Grid item xs={5}>
                             <div className="ag-theme-material" style={{ width: '90%', height: 600}}>
-                                    <LisaaJuoma setKori={setKori} kori={kori} />
+                                    <Grid container spacing={6}>
+                                        <Grid item>
+                                            <LisaaJuoma setKori={setKori} kori={kori} />
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography variant="h5" alignSelf="right">Kori 1</Typography>
+                                        </Grid>
+                                    </Grid>
                                     <AgGridReact
                                     rowData={kori}
                                     columnDefs={columnDefs}
@@ -79,7 +86,14 @@ export default function Calculator() {
                         </Grid>
                         <Grid item xs={5}>
                             <div className="ag-theme-material" style={{ width: '90%', height: 600}}>
-                                    <LisaaJuoma setKori={setKori2} kori={kori2} />
+                                    <Grid container spacing={6}>
+                                        <Grid item>
+                                            <LisaaJuoma setKori={setKori2} kori={kori2} />  
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography variant="h5" alignSelf="right">Kori 2</Typography>
+                                        </Grid>
+                                    </Grid>
                                     <AgGridReact
                                     rowData={kori2}
                                     columnDefs={columnDefs2}
