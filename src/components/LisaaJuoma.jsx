@@ -13,7 +13,9 @@ export default function LisaaJuoma({setKori, kori}) {
         tilavuus: '',
         hinta: '',
         pantti: '',
-        lukumaara: ''
+        lukumaara: '',
+        pakkausJuoma: 0,
+        pakkaus: false
     };
 
     const [juoma, setJuoma] = useState(juomaAlkuTila);
@@ -22,7 +24,8 @@ export default function LisaaJuoma({setKori, kori}) {
         tilavuus: false,
         hinta: false,
         pantti: false,
-        lukumaara: false
+        lukumaara: false,
+        pakkausJuoma: false
     })
 
     const [open, setOpen] = useState(false);
@@ -46,6 +49,12 @@ export default function LisaaJuoma({setKori, kori}) {
     const handleReset = () => {
         setJuoma(juomaAlkuTila);
     }
+
+    const handleCheckChange = () => {
+        setJuoma(vanhaTila => ({
+            ...vanhaTila, pakkaus: !vanhaTila.pakkaus
+        }));
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -72,7 +81,7 @@ export default function LisaaJuoma({setKori, kori}) {
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Lisää juoma</DialogTitle>
-                <JuomaDia juoma={juoma} handleChange={handleChange} virheet={virheet} />
+                <JuomaDia juoma={juoma} handleChange={handleChange} virheet={virheet} handleCheckChange={handleCheckChange} />
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={handleAdd} disabled={validateInput()}>Lisää koriin</Button>
